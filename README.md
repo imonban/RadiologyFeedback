@@ -2,7 +2,7 @@
 
 Model categorizes patients comments from the radiology department in different buckets. 
 
-## Create conda enviromnet.
+## Create conda environment.
 conda create --name 'Provide a new name' --file requirements.txt
 
 ## Train
