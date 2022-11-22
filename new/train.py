@@ -19,6 +19,7 @@ from textwrap import wrap
 # RegEx for removing non-letter characters
 import re
 import random
+import joblib,pickle
 import os
 import json
 
@@ -105,7 +106,10 @@ class radiologyretive(object):
         y_train = self.y_train
         y_valid = self.y_test
         
+
         self.xgb_model = xgb.XGBClassifier(objective='binary:logistic', eta=0.3, scale_pos_weight = 1.32 , silent=1, subsample=0.8).fit(train_sentence_embeddings, self.y_train) 
+        pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.sav', 'wb'))
+        # joblib.dump(self.xgb_model, "./new_model")
         self.xgb_prediction = self.xgb_model.predict_proba(test_sentence_embeddings)
         y_pred = self.xgb_model.predict(test_sentence_embeddings)
         print(classification_report(y_valid, self.xgb_model.predict(test_sentence_embeddings)))

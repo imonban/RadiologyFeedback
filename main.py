@@ -28,7 +28,7 @@ args = parser.parse_args()
 
 def main():
     feedback = train.radiologyretive()
-    action = train_action.radiologyaction()
+    #action = train_action.radiologyaction()
     if args.flag == 'Train':
         try:
             traindf = pd.read_excel(args.traindata)
@@ -37,15 +37,15 @@ def main():
             labels.remove('Comments')
             feedback.train_main(traindf, validdf, labels)
             feedback.model_save(args.modelpath)
-            action.train_main(traindf, validdf, labels)
-            action.model_save(args.modelpath)
+            #action.train_main(traindf, validdf, labels)
+            #action.model_save(args.modelpath)
         except:
             sys.exit('Enter the path for the correct .xlsx file or model saving path')
     if args.flag == 'Test':
         #try:
             testdf = pd.read_excel(args.testdata)
             feedback.model_load(args.modelpath)
-            action.model_load(args.modelpath)
+            #action.model_load(args.modelpath)
             annotated_test = feedback.test_main(testdf)
             print('finished the comments categorization')
             annotated_test_action = action.test_main(annotated_test)
