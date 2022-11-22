@@ -108,6 +108,9 @@ class radiologyretive(object):
 
     def train_main(self, traindf, testdf):
         #load pre-trained model
+        #traindf["Received_date"] = ""
+        #traindf["Received_date"] = pd.to_datetime(traindf["Received_date"], format='%Y-%m-%d')
+        #traindf = traindf.loc[(traindf["Received_date"] >= '2020-09-01')& (traindf["Received_date"] < '2020-09-15')] 
 
         self.df_train=traindf[['Comments','Daymaker sent']].dropna()
         self.df_test=testdf[['Comments','Daymaker sent']].dropna() 
