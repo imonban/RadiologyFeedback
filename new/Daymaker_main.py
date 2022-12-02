@@ -6,7 +6,7 @@ import Daymaker_train as train
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--modelpath', type=str,
-                    default="{0}/RadiologyFeedback_meghana/new/new_model/saved".format(os.getcwd()), 
+                    default="{0}/RadiologyFeedback_meghana/new/new_model_saved/saved".format(os.getcwd()), 
                     help='path to the trained model')
 
 parser.add_argument('--traindata', type=str, default="{0}/Daymaker Train.xlsx".format(os.getcwd()),

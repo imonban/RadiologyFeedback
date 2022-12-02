@@ -89,7 +89,7 @@ class radiologyretive(object):
 
     def model_load(self, modelpath):
         #try:
-        self.xgb_model = pickle.load(open(modelpath+'LMXgboost.sav', 'rb'))
+        self.xgb_model = pickle.load(open(modelpath+'LMXgboost.bin', 'rb'))
         #self.labels = self.getList(self.xgb_model)
         print('Model loaded!!')
         #except:
@@ -97,7 +97,7 @@ class radiologyretive(object):
 
     def model_save(self, modelpath):
         try:
-            pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.sav', 'wb'))
+            pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.bin', 'wb'))
             print('Model saved!!')
         except:
             print('Model saving didn\'t worked')
