@@ -86,22 +86,43 @@ class radiologyretive(object):
 
     #def getList(self, dict):
        # return list(dict.keys())
+    # def save_json(self, filepath):
+    #     json_txt = json.dumps(_saved_model, indent=4)
+    #     with open(filepath, "w") as file:
+    #         file.write(json_txt)
 
-    def model_load(self, modelpath):
-        #try:
-        self.xgb_model = pickle.load(open(modelpath+'LMXgboost.bin', 'rb'))
+    # def load_json(self, filepath):
+    #     with open(filepath, "r") as file:
+    #         _saved_model = json.load(file)
+
+    def model_load(self,modelpath):
+        self.xgb_model = xgb.XGBClassifier()
+        self.xgb_model.load_model(modelpath+'LMXgboost.json') 
+        #self.xgb_model = pickle.load(open(modelpath+'LMXgboost.bin', 'rb'))
+       
         #self.labels = self.getList(self.xgb_model)
         print('Model loaded!!')
+
+        #return xgb.XGBClassifier(objective='binary:logistic', eta=0.3, silent=1, subsample=0.8, scale_pos_weight=99)
+        #try:
         #except:
         #    sys.exit('Model couldn\'t be loaded')
 
     def model_save(self, modelpath):
         try:
-            pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.bin', 'wb'))
+            self.xgb_model.save_model(modelpath+'LMXgboost.json')
+             
+            # pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.json', 'wb'))
             print('Model saved!!')
         except:
             print('Model saving didn\'t worked')
+        # try:
  
+        #     pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.json', 'wb'))
+        #     print('Model saved!!')
+        # except:
+        #     print('Model saving didn\'t worked') 
+
         # self.labels = None
     def encode(self, sentences):
         return self.LMmodel.encode(sentences)
@@ -137,7 +158,7 @@ class radiologyretive(object):
         # print(classification_report(y_valid, self.xgb_model[l].predict(test_sentence_embeddings)))
   
     
-    def test_main(self, test): 
+    def test_main(self, test,modelpath): 
         self.test_df=test[['Comments','Daymaker sent']].dropna()  
         self.test_df = self.test_df.astype({'Comments':'string'}) 
         self.test_df  = self.test_df.reset_index(drop=True)
@@ -146,6 +167,11 @@ class radiologyretive(object):
 
         pred_dyn = []
         test_sentence_embeddings = self.encode(self.test_df['Comments_proc']) 
+        #rint('model:',self.model_load(modelpath))
+        #model=self.model_load(modelpath).load_model(modelpath+"LMXgboost.json")
+        #new
+        # model=xgb.XGBClassifier(objective='binary:logistic', eta=0.3, silent=1, subsample=0.8, scale_pos_weight=99).load_model(modelpath+"LMXgboost.json")
+        # self.xgb_prediction = model.predict_proba(test_sentence_embeddings) 
         self.xgb_prediction = self.xgb_model.predict_proba(test_sentence_embeddings) 
         pred_dyn.append(self.xgb_model.predict(test_sentence_embeddings))
         print('worked') 
@@ -199,12 +225,12 @@ class radiologyretive(object):
             draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
             y += line_heights[i] 
         # Opening the primary image (used in background)
-        temp1 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template1.png".format(os.getcwd()))
-        temp2 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template2.png".format(os.getcwd()))
-        temp3 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template3.png".format(os.getcwd()))
-        temp4 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template4.png".format(os.getcwd()))
-        temp5 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template5.png".format(os.getcwd()))
-        temp6 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template6.png".format(os.getcwd())) 
+        temp1 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template1.png".format(os.getcwd()))
+        temp2 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template2.png".format(os.getcwd()))
+        temp3 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template3.png".format(os.getcwd()))
+        temp4 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template4.png".format(os.getcwd()))
+        temp5 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template5.png".format(os.getcwd()))
+        temp6 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template6.png".format(os.getcwd())) 
         test_list = [temp1,temp2,temp3,temp4,temp5,temp6]
         test_list 
         rand_idx = random.randrange(len(test_list))
@@ -226,7 +252,7 @@ class radiologyretive(object):
         img_new1 = img_new.convert("RGB") 
         # display(img_new1)
         #img_new1.save("/home/mnadella/RadiologyFeedback_meghana/new/img.jpg")
-        img_new1.save("{0}/RadiologyFeedback_meghana/new/output/Template-Daymaker.png".format(os.getcwd()))
+        img_new1.save("{0}/RadiologyFeedback_meghana/Daymakers/output/Template-Daymaker.png".format(os.getcwd()))
 
 
     def test_automate(self):
@@ -266,12 +292,12 @@ class radiologyretive(object):
             draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
             y += line_heights[i] 
         # Opening the primary image (used in background)
-        temp1 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template1.png".format(os.getcwd()))
-        temp2 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template2.png".format(os.getcwd()))
-        temp3 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template3.png".format(os.getcwd()))
-        temp4 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template4.png".format(os.getcwd()))
-        temp5 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template5.png".format(os.getcwd()))
-        temp6 = Image.open(r"{0}/RadiologyFeedback_meghana/new/templates/Template6.png".format(os.getcwd())) 
+        temp1 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template1.png".format(os.getcwd())) 
+        temp2 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template2.png".format(os.getcwd()))
+        temp3 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template3.png".format(os.getcwd()))
+        temp4 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template4.png".format(os.getcwd()))
+        temp5 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template5.png".format(os.getcwd()))
+        temp6 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template6.png".format(os.getcwd())) 
         test_list = [temp1,temp2,temp3,temp4,temp5,temp6]
         test_list 
         rand_idx = random.randrange(len(test_list))
@@ -293,7 +319,7 @@ class radiologyretive(object):
         img_new1 = img_new.convert("RGB") 
         # display(img_new1)
         #img_new1.save("/home/mnadella/RadiologyFeedback_meghana/new/img.jpg")
-        img_new1.save("{0}/RadiologyFeedback_meghana/new/output/Template-Daymaker.png".format(os.getcwd()))
+        img_new1.save("{0}/RadiologyFeedback_meghana/Daymakers/output/Template-Daymaker.png".format(os.getcwd()))
 
 
 
