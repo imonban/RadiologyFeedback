@@ -2,11 +2,11 @@ import pandas as pd
 import os
 import argparse
 import sys
-import Daymaker_train as train 
+import daymaker_train as train 
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--modelpath', type=str,
-                    default="{0}/RadiologyFeedback_meghana/new/new_model_saved/saved".format(os.getcwd()), 
+                    default="{0}/RadiologyFeedback_meghana/Daymakers/savedModel/".format(os.getcwd()), 
                     help='path to the trained model')
 
 parser.add_argument('--traindata', type=str, default="{0}/Daymaker Train.xlsx".format(os.getcwd()),
@@ -46,7 +46,7 @@ def main():
     if args.flag == 'Test':
         testdf = pd.read_excel(args.testdata)
         feedback.model_load(args.modelpath)
-        annotated_test = feedback.test_main(testdf)
+        annotated_test = feedback.test_main(testdf,args.modelpath)
         print('finished the comments categorization')
         feedback.test_automate()
         print('finished generating template') 
