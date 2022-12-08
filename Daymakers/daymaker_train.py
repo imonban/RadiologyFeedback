@@ -97,16 +97,9 @@ class radiologyretive(object):
 
     def model_load(self,modelpath):
         self.xgb_model = xgb.XGBClassifier()
-        self.xgb_model.load_model(modelpath+'LMXgboost.json')
-
-        #xgb.XGBClassifier(objective='binary:logistic', eta=0.3, silent=1, subsample=0.8, scale_pos_weight=99).load_model(modelpath+"LMXgboost.json") 
-        #try:
-        # with open(modelpath, "r") as file:
-        #     self.xgb_model = json.load(file)
-        #model = xg.load_model(open(modelpath+'LMXgboost.json', 'r'))
-        #self.xgb_model = pickle.load(open(modelpath+'LMXgboost.json', 'rb'))
-        # with open(modelpath, "r") as file:
-        #     self.xgb_model = json.load(file)
+        self.xgb_model.load_model(modelpath+'LMXgboost.json') 
+        #self.xgb_model = pickle.load(open(modelpath+'LMXgboost.bin', 'rb'))
+       
         #self.labels = self.getList(self.xgb_model)
         print('Model loaded!!')
 
@@ -118,23 +111,18 @@ class radiologyretive(object):
     def model_save(self, modelpath):
         try:
             self.xgb_model.save_model(modelpath+'LMXgboost.json')
-            # json_txt = json.dumps(self.xgb_model, indent=4)
-            # with open(modelpath, "w") as file:
-            #     file.write(json_txt)
-            # #pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.json', 'wb'))
+             
+            # pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.json', 'wb'))
             print('Model saved!!')
         except:
             print('Model saving didn\'t worked')
         # try:
-        #     self.xgb_model.save_model(modelpath+'LMXgboost.json') 
-            # json_txt = json.dumps(self.xgb_model, indent=4)
-            # with open(modelpath, "w") as file:
-            #     file.write(json_txt)
-            #pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.json', 'wb'))
+ 
+        #     pickle.dump(self.xgb_model, open(modelpath+'LMXgboost.json', 'wb'))
         #     print('Model saved!!')
         # except:
-        #     print('Model saving didn\'t worked')
- 
+        #     print('Model saving didn\'t worked') 
+
         # self.labels = None
     def encode(self, sentences):
         return self.LMmodel.encode(sentences)
