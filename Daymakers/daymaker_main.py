@@ -9,13 +9,13 @@ parser.add_argument('--modelpath', type=str,
                     default="{0}/RadiologyFeedback_meghana/Daymakers/savedModel/".format(os.getcwd()), 
                     help='path to the trained model')
 
-parser.add_argument('--traindata', type=str, default="{0}/Daymaker Train.xlsx".format(os.getcwd()),
+parser.add_argument('--traindata', type=str, default="{0}/Daymaker_train.xlsx".format(os.getcwd()),
                     help='path to the train .xlsx file that contains comments with labels ')
 
-parser.add_argument('--validationdata', type=str, default="{0}/Daymaker Test.xlsx".format(os.getcwd()), 
+parser.add_argument('--validationdata', type=str, default="{0}/Daymaker_test.xlsx".format(os.getcwd()), 
                     help='path to the validation file .xlsx that contains comments with labels; only needed for training')
  
-parser.add_argument('--testdata', type=str, default="{0}/Daymaker Test.xlsx".format(os.getcwd()), 
+parser.add_argument('--testdata', type=str, default="{0}/Daymaker_test.xlsx".format(os.getcwd()), 
                     help='path to the test file .xlsx that contains comments without labels; only needed for testing ')
 # parser.add_argument('--savepath', type=str, default="./Test_Student.xlsx", 
 #                     help='path to save the annotated test file .xlsx that contains comments and model derieved labels; only needed for testing ')
