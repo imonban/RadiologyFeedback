@@ -50,8 +50,8 @@ def review_to_words(review):
     text = re.sub(r"[^a-zA-Z0-9]", ' ', text.lower())
     words = text.split()
     #       remove stopwords and stem
-    words = [w.strip() for w in words if w not in stopwords.words('english')]
-    words = [stemmer.stem(w) for w in words]
+    # words = [w.strip() for w in words if w not in stopwords.words('english')]
+    # words = [stemmer.stem(w) for w in words]
 
     # Return final list of words
     return ' '.join(words)
@@ -140,7 +140,11 @@ class radiologyretive(object):
         self.df_train  = self.df_train.reset_index(drop=True)
         self.df_test  = self.df_test.reset_index(drop=True)
         self.df_train['Cleaned_text']=self.df_train['Comments'].apply(b) 
+        self.df_train = self.df_train[self.df_train['Cleaned_text'].str.split().str.len().gt(5)]
+        self.df_train  = self.df_train.reset_index(drop=True)
         self.df_test['Cleaned_text']=self.df_test['Comments'].apply(b) 
+        self.df_test = self.df_test[self.df_test['Cleaned_text'].str.split().str.len().gt(5)]
+        self.df_test  = self.df_test.reset_index(drop=True)
         self.df_train['Comments_proc'] = self.df_train['Cleaned_text'].apply(review_to_words) 
         self.df_test['Comments_proc'] = self.df_test['Cleaned_text'].apply(review_to_words)  
   
@@ -150,7 +154,7 @@ class radiologyretive(object):
 
         y_train = self.df_train['Daymaker sent'].values
         y_valid = self.df_test['Daymaker sent'].values
-        self.xgb_model = xgb.XGBClassifier(objective='binary:logistic', eta=0.3, silent=1, subsample=0.8, scale_pos_weight=99).fit(train_sentence_embeddings, y_train) 
+        self.xgb_model = xgb.XGBClassifier(objective='binary:logistic', eta=0.3, silent=1, subsample=0.8, scale_pos_weight=1.32).fit(train_sentence_embeddings, y_train) 
         self.xgb_prediction = self.xgb_model.predict_proba(test_sentence_embeddings) 
         print(classification_report(y_valid, self.xgb_model.predict(test_sentence_embeddings)))
 
@@ -163,6 +167,8 @@ class radiologyretive(object):
         self.test_df = self.test_df.astype({'Comments':'string'}) 
         self.test_df  = self.test_df.reset_index(drop=True)
         self.test_df['Cleaned_text']=self.test_df['Comments'].apply(b)
+        self.test_df = self.test_df[self.test_df['Cleaned_text'].str.split().str.len().gt(5)]
+        self.test_df  = self.test_df.reset_index(drop=True)
         self.test_df['Comments_proc'] = self.test_df['Cleaned_text'].apply(review_to_words) 
 
         pred_dyn = []
@@ -198,32 +204,7 @@ class radiologyretive(object):
         pred_df=pred_df.rename(columns={0: "Prediction_score"})
         pred_df_sort=pred_df.sort_values(by=["Prediction_score"], ascending=False)
         pred_df_sort.reset_index(inplace=True) 
-        WIDTH = 1100
-        HEIGHT = 400
-        V_MARGIN =  10
-        CHAR_LIMIT = 30
-        BG_COLOR = "yellow"
-        TEXT_COLOR = "black" 
-        text = '" '+pred_df_sort['Comments'].iloc[0]+' "' 
-        text = text.upper() 
-        #font = ImageFont.truetype("/home/mnadella/ZakirahsBold.ttf", 35) 
-        font = ImageFont.truetype("{0}/ZakirahsBold.ttf".format(os.getcwd()), 35) 
-        img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
-        draw_interface = ImageDraw.Draw(img) 
-        text_lines = wrap(text, CHAR_LIMIT) 
 
-        y, line_heights = self.get_y_and_heights(
-            text_lines,
-            (WIDTH, HEIGHT),
-            V_MARGIN,
-            font
-        )
-        
-        for i, line in enumerate(text_lines): 
-            line_width = font.getmask(line).getbbox()[2]
-            x = ((WIDTH - line_width) // 2) 
-            draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
-            y += line_heights[i] 
         # Opening the primary image (used in background)
         temp1 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template1.png".format(os.getcwd()))
         temp2 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template2.png".format(os.getcwd()))
@@ -231,25 +212,124 @@ class radiologyretive(object):
         temp4 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template4.png".format(os.getcwd()))
         temp5 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template5.png".format(os.getcwd()))
         temp6 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template6.png".format(os.getcwd())) 
-        test_list = [temp1,temp2,temp3,temp4,temp5,temp6]
-        test_list 
-        rand_idx = random.randrange(len(test_list))
-        img1 = test_list[rand_idx]
-        new_image = img1.resize((1920, 1280)) 
-        img2 = img 
-        new_image.paste(img2, (450, 530)) 
-        # display(new_image)
+
+        text = '" '+pred_df_sort['Comments'].iloc[0]+' "' 
+        text = text.upper() 
+
+        if len(text) < 1000:
+            WIDTH = 1500
+            HEIGHT = 700
+            V_MARGIN =  10
+            CHAR_LIMIT = 70
+            BG_COLOR = "yellow"
+            TEXT_COLOR = "black"
+            font = ImageFont.truetype("{0}/ZakirahsBold.ttf".format(os.getcwd()), 20) 
+            img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
+            draw_interface = ImageDraw.Draw(img) 
+            text_lines = wrap(text, CHAR_LIMIT) 
+            y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
+            for i, line in enumerate(text_lines):
+                line_width = font.getmask(line).getbbox()[2]
+                x = ((WIDTH - line_width) // 2) 
+                draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
+                y += line_heights[i]
+        
+            test_list = [temp1,temp2,temp3,temp4,temp5,temp6]  
+            rand_idx = random.randrange(len(test_list))
+            img1 = test_list[rand_idx] 
+    
+            if img1 == temp1:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500)) 
+                
+            elif img1 == temp2:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500)) 
+                
+            elif img1 == temp3:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 650)) 
+                
+            elif img1 == temp4:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500))  
+                
+            elif img1 == temp5:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (500, 650))  
+                
+            elif img1 == temp6:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 600))  
+
+        else:
+            WIDTH = 1500
+            HEIGHT = 800
+            V_MARGIN =  10
+            CHAR_LIMIT = 100
+            BG_COLOR = "yellow"
+            TEXT_COLOR = "black"
+            font = ImageFont.truetype("{0}/ZakirahsBold.ttf".format(os.getcwd()), 20)
+            img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
+            draw_interface = ImageDraw.Draw(img) 
+            text_lines = wrap(text, CHAR_LIMIT) 
+            y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
+            for i, line in enumerate(text_lines):
+                line_width = font.getmask(line).getbbox()[2]
+                x = ((WIDTH - line_width) // 2) 
+                draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
+                y += line_heights[i]
+            test_list = [temp1,temp2,temp3,temp4,temp5,temp6]  
+            rand_idx = random.randrange(len(test_list))
+            img1 = test_list[rand_idx]  
+    
+            if img1 == temp1:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (530, 440)) 
+                
+            elif img1 == temp2:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (530, 490)) 
+                
+            elif img1 == temp3:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (530, 600)) 
+            
+            elif img1 == temp4:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500))  
+                
+            elif img1 == temp5:
+                new_image = img1.resize((2950, 1900)) 
+                img2 = img
+                new_image.paste(img2, (680, 750))  
+        
+            elif img1 == temp6:
+                new_image = img1.resize((2650, 1800)) 
+                img2 = img
+                new_image.paste(img2, (530, 630)) 
+
         img_new = new_image.convert("RGBA")
-        datas = img_new.getdata() 
+        datas = img_new.getdata()
         newData = []
         for item in datas:
             if item[1] > 225:
                 newData.append((255, 255, 250, 0))
             else:
                 newData.append(item)
+                    
         img_new.putdata(newData)
-
-        img_new1 = img_new.convert("RGB") 
+        img_new1  = img_new.convert("RGB")  
         # display(img_new1)
         #img_new1.save("/home/mnadella/RadiologyFeedback_meghana/new/img.jpg")
         img_new1.save("{0}/RadiologyFeedback_meghana/Daymakers/output/Template-Daymaker.png".format(os.getcwd()))
@@ -264,60 +344,134 @@ class radiologyretive(object):
         pred_df=pred_df.rename(columns={0: "Prediction_score"})
         pred_df_sort=pred_df.sort_values(by=["Prediction_score"], ascending=False)
         pred_df_sort.reset_index(inplace=True) 
-        WIDTH = 1100
-        HEIGHT = 400
-        V_MARGIN =  10
-        CHAR_LIMIT = 30
-        BG_COLOR = "yellow"
-        TEXT_COLOR = "black" 
+
         print(pred_df_sort['Comments'])
         text = '" '+pred_df_sort['Comments'].iloc[0]+' "' 
         text = text.upper() 
-        #font = ImageFont.truetype("/home/mnadella/ZakirahsBold.ttf", 35) 
-        font = ImageFont.truetype("{0}/ZakirahsBold.ttf".format(os.getcwd()), 35) 
-        img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
-        draw_interface = ImageDraw.Draw(img) 
-        text_lines = wrap(text, CHAR_LIMIT) 
 
-        y, line_heights = self.get_y_and_heights(
-            text_lines,
-            (WIDTH, HEIGHT),
-            V_MARGIN,
-            font
-        )
-        
-        for i, line in enumerate(text_lines): 
-            line_width = font.getmask(line).getbbox()[2]
-            x = ((WIDTH - line_width) // 2) 
-            draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
-            y += line_heights[i] 
         # Opening the primary image (used in background)
         temp1 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template1.png".format(os.getcwd())) 
         temp2 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template2.png".format(os.getcwd()))
         temp3 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template3.png".format(os.getcwd()))
         temp4 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template4.png".format(os.getcwd()))
         temp5 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template5.png".format(os.getcwd()))
-        temp6 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template6.png".format(os.getcwd())) 
-        test_list = [temp1,temp2,temp3,temp4,temp5,temp6]
-        test_list 
-        rand_idx = random.randrange(len(test_list))
-        img1 = test_list[rand_idx]
-        new_image = img1.resize((1920, 1280)) 
-        img2 = img 
-        new_image.paste(img2, (450, 530)) 
-        # display(new_image)
+        temp6 = Image.open(r"{0}/RadiologyFeedback_meghana/Daymakers/templates/Template6.png".format(os.getcwd()))  
+
+        if len(text) < 1000:
+            WIDTH = 1500
+            HEIGHT = 700
+            V_MARGIN =  10
+            CHAR_LIMIT = 70
+            BG_COLOR = "yellow"
+            TEXT_COLOR = "black"
+            font = ImageFont.truetype("{0}/ZakirahsBold.ttf".format(os.getcwd()), 20) 
+            img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
+            draw_interface = ImageDraw.Draw(img) 
+            text_lines = wrap(text, CHAR_LIMIT) 
+            y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
+            for i, line in enumerate(text_lines):
+                line_width = font.getmask(line).getbbox()[2]
+                x = ((WIDTH - line_width) // 2) 
+                draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
+                y += line_heights[i]
+        
+            test_list = [temp1,temp2,temp3,temp4,temp5,temp6]  
+            rand_idx = random.randrange(len(test_list))
+            img1 = test_list[rand_idx] 
+    
+            if img1 == temp1:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500)) 
+                
+            elif img1 == temp2:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500)) 
+                
+            elif img1 == temp3:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 650)) 
+                
+            elif img1 == temp4:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500))  
+                
+            elif img1 == temp5:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (500, 650))  
+                
+            elif img1 == temp6:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 600))  
+
+        else:
+            WIDTH = 1500
+            HEIGHT = 800
+            V_MARGIN =  10
+            CHAR_LIMIT = 100
+            BG_COLOR = "yellow"
+            TEXT_COLOR = "black"
+            font = ImageFont.truetype("{0}/ZakirahsBold.ttf".format(os.getcwd()), 20)
+            img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
+            draw_interface = ImageDraw.Draw(img) 
+            text_lines = wrap(text, CHAR_LIMIT) 
+            y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
+            for i, line in enumerate(text_lines):
+                line_width = font.getmask(line).getbbox()[2]
+                x = ((WIDTH - line_width) // 2) 
+                draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
+                y += line_heights[i]
+            test_list = [temp1,temp2,temp3,temp4,temp5,temp6]  
+            rand_idx = random.randrange(len(test_list))
+            img1 = test_list[rand_idx]  
+    
+            if img1 == temp1:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (530, 440)) 
+                
+            elif img1 == temp2:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (530, 490)) 
+                
+            elif img1 == temp3:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (530, 600)) 
+            
+            elif img1 == temp4:
+                new_image = img1.resize((2450, 1650)) 
+                img2 = img
+                new_image.paste(img2, (550, 500))  
+                
+            elif img1 == temp5:
+                new_image = img1.resize((2950, 1900)) 
+                img2 = img
+                new_image.paste(img2, (680, 750))  
+        
+            elif img1 == temp6:
+                new_image = img1.resize((2650, 1800)) 
+                img2 = img
+                new_image.paste(img2, (530, 630)) 
+
         img_new = new_image.convert("RGBA")
-        datas = img_new.getdata() 
+        datas = img_new.getdata()
         newData = []
         for item in datas:
             if item[1] > 225:
                 newData.append((255, 255, 250, 0))
             else:
                 newData.append(item)
+                    
         img_new.putdata(newData)
-
-        img_new1 = img_new.convert("RGB") 
-        # display(img_new1)
+        img_new1  = img_new.convert("RGB") 
+        #display(img_new1)
         #img_new1.save("/home/mnadella/RadiologyFeedback_meghana/new/img.jpg")
         img_new1.save("{0}/RadiologyFeedback_meghana/Daymakers/output/Template-Daymaker.png".format(os.getcwd()))
 
