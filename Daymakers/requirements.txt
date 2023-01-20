@@ -11,4 +11,4 @@ seaborn==0.12.2
 sentence_transformers==2.2.2
 spellchecker==0.4
 textblob==0.17.1
-xgboost==1.7.3
+xgboost==1.4.0
