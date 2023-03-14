@@ -4,19 +4,32 @@ import argparse
 import sys
 import daymaker_train as train 
 
+header = "/home/mnadella/RadiologyFeedback_meghana/"
+header1 = "/home/mnadella/"
 parser = argparse.ArgumentParser()
 parser.add_argument('--modelpath', type=str,
-                    default="{0}/RadiologyFeedback_meghana/Daymakers/savedModel/".format(os.getcwd()), 
+                    default=header+"Daymakers/savedModel/", 
                     help='path to the trained model')
 
-parser.add_argument('--traindata', type=str, default="{0}/Daymaker_train.xlsx".format(os.getcwd()),
-                    help='path to the train .xlsx file that contains comments with labels ')
+parser.add_argument('--traindata', type=str, default= header1+"Daymaker_train.xlsx",help='path to the train .xlsx file that contains comments with labels')
 
-parser.add_argument('--validationdata', type=str, default="{0}/Daymaker_test.xlsx".format(os.getcwd()), 
+parser.add_argument('--validationdata', type=str, default= header1+"Daymaker_test.xlsx", 
                     help='path to the validation file .xlsx that contains comments with labels; only needed for training')
  
-parser.add_argument('--testdata', type=str, default="{0}/Daymaker_test.xlsx".format(os.getcwd()), 
+parser.add_argument('--testdata', type=str, default=header1+"Daymaker_test.xlsx", 
                     help='path to the test file .xlsx that contains comments without labels; only needed for testing ')
+# parser.add_argument('--modelpath', type=str,
+#                     default="{0}/RadiologyFeedback_meghana/Daymakers/savedModel/".format(os.getcwd()), 
+#                     help='path to the trained model')
+
+# parser.add_argument('--traindata', type=str, default="{0}/Daymaker_train.xlsx".format(os.getcwd()),
+#                     help='path to the train .xlsx file that contains comments with labels ')
+
+# parser.add_argument('--validationdata', type=str, default="{0}/Daymaker_test.xlsx".format(os.getcwd()), 
+#                     help='path to the validation file .xlsx that contains comments with labels; only needed for training')
+ 
+# parser.add_argument('--testdata', type=str, default="{0}/Daymaker_test.xlsx".format(os.getcwd()), 
+#                     help='path to the test file .xlsx that contains comments without labels; only needed for testing ')
 # parser.add_argument('--savepath', type=str, default="./Test_Student.xlsx", 
 #                     help='path to save the annotated test file .xlsx that contains comments and model derieved labels; only needed for testing ')
 parser.add_argument('--flag', type=str, default='Test', 

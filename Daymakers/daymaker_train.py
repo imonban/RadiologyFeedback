@@ -68,7 +68,10 @@ def b(x):
     words = text.split()
     y=[] 
     for word in words:
-        y.append(spell.correction(word))
+        if word.isalpha():  
+            y.append(spell.correction(word))
+        else:
+            y.append(word)
     try:
         if None in y:
             y[y.index(None)]=words[y.index(None)]
