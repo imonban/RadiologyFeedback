@@ -33,10 +33,10 @@ from nltk.corpus import stopwords # import stopwords
 from nltk.stem.porter import *
 
 stemmer = PorterStemmer()
-from roc_utils import *
  
-from textblob import TextBlob
-from textblob import Word
+ 
+#from textblob import TextBlob
+#from textblob import Word
 import string
 from spellchecker import SpellChecker
 from collections import Counter
@@ -232,7 +232,17 @@ class radiologyretive(object):
         temp3 = Image.open(header+"Daymakers/templates/Template3.png")
         temp4 = Image.open(header+"Daymakers/templates/Template4.png")  
         temp5 = Image.open(header+"Daymakers/templates/Template5.png")
-        temp6 = Image.open(header+"Daymakers/templates/Template6.png") 
+        temp6 = Image.open(header+"Daymakers/templates/Template6.png")  
+        temp7 = Image.open(header+"Daymakers/templates/Template7.PNG")
+        temp8 = Image.open(header+"Daymakers/templates/Template8.PNG") 
+        temp9 = Image.open(header+"Daymakers/templates/Template9.PNG")
+        temp10 = Image.open(header+"Daymakers/templates/Template10.PNG")  
+        temp11 = Image.open(header+"Daymakers/templates/Template11.PNG")
+        temp12 = Image.open(header+"Daymakers/templates/Template12.PNG")
+        temp13 = Image.open(header+"Daymakers/templates/Template13.PNG")
+        temp14 = Image.open(header+"Daymakers/templates/Template14.PNG") 
+        temp15 = Image.open(header+"Daymakers/templates/Template15.PNG")
+        temp16 = Image.open(header+"Daymakers/templates/Template16.PNG")   
 
         text = '" '+pred_df_sort['Comments'].iloc[1]+' "' 
         text = text.upper() 
@@ -255,11 +265,11 @@ class radiologyretive(object):
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
         
-            test_list = [temp1,temp2, temp3, temp4]  
+            test_list = [temp1,temp2, temp3, temp4, temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx] 
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (550, 500)) 
@@ -307,11 +317,11 @@ class radiologyretive(object):
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
         
-            test_list = [temp2, temp3, temp5]  
+            test_list = [temp2, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx] 
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (550, 500)) 
@@ -349,11 +359,11 @@ class radiologyretive(object):
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
         
-            test_list = [temp1, temp3, temp5]  
+            test_list = [temp1, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx] 
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (550, 500))  
@@ -384,11 +394,11 @@ class radiologyretive(object):
                 x = ((WIDTH - line_width) // 2) 
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
-            test_list = [temp1,temp3,temp4]  
+            test_list = [temp1,temp3,temp4,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx]  
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (530, 440))  
@@ -445,6 +455,16 @@ class radiologyretive(object):
         temp4 = Image.open(header+"Daymakers/templates/Template4.png")  
         temp5 = Image.open(header+"Daymakers/templates/Template5.png")
         temp6 = Image.open(header+"Daymakers/templates/Template6.png")
+        temp7 = Image.open(header+"Daymakers/templates/Template7.PNG")
+        temp8 = Image.open(header+"Daymakers/templates/Template8.PNG") 
+        temp9 = Image.open(header+"Daymakers/templates/Template9.PNG")
+        temp10 = Image.open(header+"Daymakers/templates/Template10.PNG")  
+        temp11 = Image.open(header+"Daymakers/templates/Template11.PNG")
+        temp12 = Image.open(header+"Daymakers/templates/Template12.PNG")
+        temp13 = Image.open(header+"Daymakers/templates/Template13.PNG")
+        temp14 = Image.open(header+"Daymakers/templates/Template14.PNG") 
+        temp15 = Image.open(header+"Daymakers/templates/Template15.PNG")
+        temp16 = Image.open(header+"Daymakers/templates/Template16.PNG")
 
         if len(text) > 500 and len(text) < 1000:
             WIDTH = 1500
@@ -464,11 +484,11 @@ class radiologyretive(object):
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
                 
-            test_list = [temp1,temp3,temp4]  
+            test_list = [temp1,temp3,temp4,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx]  
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (530, 440))  
@@ -501,11 +521,11 @@ class radiologyretive(object):
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
         
-            test_list = [temp2, temp3, temp5]  
+            test_list = [temp2, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx] 
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (550, 500)) 
@@ -543,11 +563,11 @@ class radiologyretive(object):
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
         
-            test_list = [temp1, temp3, temp5]  
+            test_list = [temp1, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx] 
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (550, 500))  
@@ -578,11 +598,11 @@ class radiologyretive(object):
                 x = ((WIDTH - line_width) // 2) 
                 draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
                 y += line_heights[i]
-            test_list = [temp1,temp3,temp4]  
+            test_list = [temp1,temp3,temp4,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
             rand_idx = random.randrange(len(test_list))
             img1 = test_list[rand_idx]  
     
-            if img1 == temp1:
+            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
                 new_image = img1.resize((2450, 1650)) 
                 img2 = img
                 new_image.paste(img2, (530, 440))  
