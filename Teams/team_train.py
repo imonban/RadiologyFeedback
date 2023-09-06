@@ -147,7 +147,6 @@ class radiologyretive(object):
         self.df_pred.to_excel(header+"Teams/output/pred.xlsx")
 
  
-  
     
     def test_main(self, test,modelpath):  
         test.rename(columns = {'DISAPPOINTED_COMMENTS':'Comments'}, inplace = True)
