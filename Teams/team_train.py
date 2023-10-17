@@ -14,7 +14,7 @@ import joblib,pickle
 import os
 import json  
 import nltk
-nltk.download("stopwords")   
+nltk.download("stopwords")   d
 from nltk.corpus import stopwords  
 
 from nltk.stem.porter import *

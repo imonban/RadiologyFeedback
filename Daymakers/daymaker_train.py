@@ -247,7 +247,7 @@ class radiologyretive(object):
         text = '" '+pred_df_sort['Comments'].iloc[1]+' "' 
         text = text.upper() 
 
-        if len(text) > 500 and len(text) < 1000:
+        if len(text) > 350 and len(text) < 1000:
             WIDTH = 1500
             HEIGHT = 700
             V_MARGIN =  10
@@ -299,56 +299,56 @@ class radiologyretive(object):
                 img2 = img
                 new_image.paste(img2, (550, 600))  
         
-        elif len(text)> 100 and len(text) < 500: 
-            WIDTH = 1500
-            HEIGHT = 700
-            V_MARGIN =  5
-            CHAR_LIMIT = 70
-            BG_COLOR = "yellow"
-            TEXT_COLOR = "black"
-            font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 30) 
-            img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
-            draw_interface = ImageDraw.Draw(img) 
-            text_lines = wrap(text, CHAR_LIMIT) 
-            y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
-            for i, line in enumerate(text_lines):
-                line_width = font.getmask(line).getbbox()[2]
-                x = ((WIDTH - line_width) // 2) 
-                draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
-                y += line_heights[i]
+        # elif len(text)> 100 and len(text) < 500: 
+        #     WIDTH = 1500
+        #     HEIGHT = 700
+        #     V_MARGIN =  5
+        #     CHAR_LIMIT = 70
+        #     BG_COLOR = "yellow"
+        #     TEXT_COLOR = "black"
+        #     font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 30) 
+        #     img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
+        #     draw_interface = ImageDraw.Draw(img) 
+        #     text_lines = wrap(text, CHAR_LIMIT) 
+        #     y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
+        #     for i, line in enumerate(text_lines):
+        #         line_width = font.getmask(line).getbbox()[2]
+        #         x = ((WIDTH - line_width) // 2) 
+        #         draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
+        #         y += line_heights[i]
         
-            test_list = [temp2, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
-            rand_idx = random.randrange(len(test_list))
-            img1 = test_list[rand_idx] 
+        #     test_list = [temp2, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
+        #     rand_idx = random.randrange(len(test_list))
+        #     img1 = test_list[rand_idx] 
     
-            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (550, 500)) 
+        #     if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (550, 500)) 
                 
-            elif img1 == temp2:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (550, 500)) 
+        #     elif img1 == temp2:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (550, 500)) 
                 
-            elif img1 == temp3:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (550, 650)) 
+        #     elif img1 == temp3:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (550, 650)) 
 
-            elif img1 == temp5:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (500, 650))   
+        #     elif img1 == temp5:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (500, 650))   
         
-        elif len(text)<=100:
-            WIDTH = 1500
-            HEIGHT = 700
+        elif len(text)<=350:
+            WIDTH = 2000
+            HEIGHT = 1000
             V_MARGIN =  10
-            CHAR_LIMIT = 40
+            CHAR_LIMIT = 50
             BG_COLOR = "yellow"
             TEXT_COLOR = "black"
-            font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 40) 
+            font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 60) 
             img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
             draw_interface = ImageDraw.Draw(img) 
             text_lines = wrap(text, CHAR_LIMIT) 
@@ -364,19 +364,24 @@ class radiologyretive(object):
             img1 = test_list[rand_idx] 
     
             if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
-                new_image = img1.resize((2450, 1650)) 
+                new_image = img1.resize((3000, 1650)) 
                 img2 = img
-                new_image.paste(img2, (550, 500))  
+                new_image.paste(img2, (400, 400))  
                 
-            elif img1 == temp3:
-                new_image = img1.resize((2450, 1650)) 
+            elif img1 == temp12:
+                new_image = img1.resize((3000, 1650)) 
                 img2 = img
-                new_image.paste(img2, (550, 650)) 
+                new_image.paste(img2, (400, 500))  
+                
+            # elif img1 == temp3:
+            #     new_image = img1.resize((3000, 1650)) 
+            #     img2 = img
+            #     new_image.paste(img2, (400, 500)) 
 
-            elif img1 == temp5:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (500, 650))  
+            # elif img1 == temp5:
+            #     new_image = img1.resize((3000, 1650)) 
+            #     img2 = img
+            #     new_image.paste(img2, (400, 500))  
         else:
             WIDTH = 1500
             HEIGHT = 800
@@ -466,7 +471,7 @@ class radiologyretive(object):
         temp15 = Image.open(header+"Daymakers/templates/Template15.PNG")
         temp16 = Image.open(header+"Daymakers/templates/Template16.PNG")
 
-        if len(text) > 500 and len(text) < 1000:
+        if len(text) > 350 and len(text) < 1000:
             WIDTH = 1500
             HEIGHT = 800
             V_MARGIN =  5
@@ -503,56 +508,56 @@ class radiologyretive(object):
                 img2 = img
                 new_image.paste(img2, (550, 500)) 
         
-        elif len(text)> 100 and len(text) < 500: 
-            WIDTH = 1500
-            HEIGHT = 700
-            V_MARGIN =  5
-            CHAR_LIMIT = 70
-            BG_COLOR = "yellow"
-            TEXT_COLOR = "black"
-            font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 30) 
-            img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
-            draw_interface = ImageDraw.Draw(img) 
-            text_lines = wrap(text, CHAR_LIMIT) 
-            y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
-            for i, line in enumerate(text_lines):
-                line_width = font.getmask(line).getbbox()[2]
-                x = ((WIDTH - line_width) // 2) 
-                draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
-                y += line_heights[i]
+        # elif len(text)> 100 and len(text) < 500: 
+        #     WIDTH = 1500
+        #     HEIGHT = 700
+        #     V_MARGIN =  5
+        #     CHAR_LIMIT = 70
+        #     BG_COLOR = "yellow"
+        #     TEXT_COLOR = "black"
+        #     font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 30) 
+        #     img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
+        #     draw_interface = ImageDraw.Draw(img) 
+        #     text_lines = wrap(text, CHAR_LIMIT) 
+        #     y, line_heights = self.get_y_and_heights(text_lines,(WIDTH, HEIGHT), V_MARGIN, font)
+        #     for i, line in enumerate(text_lines):
+        #         line_width = font.getmask(line).getbbox()[2]
+        #         x = ((WIDTH - line_width) // 2) 
+        #         draw_interface.text((x, y), line, font=font, fill=TEXT_COLOR) 
+        #         y += line_heights[i]
         
-            test_list = [temp2, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
-            rand_idx = random.randrange(len(test_list))
-            img1 = test_list[rand_idx] 
+        #     test_list = [temp2, temp3, temp5,temp7, temp8, temp9,temp10,temp11, temp12, temp13, temp14, temp15, temp16]  
+        #     rand_idx = random.randrange(len(test_list))
+        #     img1 = test_list[rand_idx] 
     
-            if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (550, 500)) 
+        #     if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (550, 500)) 
                 
-            elif img1 == temp2:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (550, 500)) 
+        #     elif img1 == temp2:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (550, 500)) 
                 
-            elif img1 == temp3:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (550, 650)) 
+        #     elif img1 == temp3:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (550, 650)) 
 
-            elif img1 == temp5:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (500, 650))   
+        #     elif img1 == temp5:
+        #         new_image = img1.resize((2450, 1650)) 
+        #         img2 = img
+        #         new_image.paste(img2, (500, 650))   
         
-        elif len(text)<=100:
-            WIDTH = 1500
-            HEIGHT = 700
+        elif len(text)<=350:
+            WIDTH = 2000
+            HEIGHT = 1000
             V_MARGIN =  10
-            CHAR_LIMIT = 40
+            CHAR_LIMIT = 50
             BG_COLOR = "yellow"
             TEXT_COLOR = "black"
-            font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 40) 
+            font = ImageFont.truetype(header+"Daymakers/ZakirahsBold.ttf" , 60) 
             img = Image.new("RGB", (WIDTH, HEIGHT), color=BG_COLOR) 
             draw_interface = ImageDraw.Draw(img) 
             text_lines = wrap(text, CHAR_LIMIT) 
@@ -568,19 +573,19 @@ class radiologyretive(object):
             img1 = test_list[rand_idx] 
     
             if img1 == temp1 or img1 == temp7 or img1 == temp8 or img1 == temp9 or img1 == temp10 or img1 == temp11 or img1 == temp12 or img1 == temp13 or img1 == temp14 or img1 == temp15 or img1 == temp16:
-                new_image = img1.resize((2450, 1650)) 
+                new_image = img1.resize((3000, 1650)) 
                 img2 = img
-                new_image.paste(img2, (550, 500))  
+                new_image.paste(img2, (400, 400))  
                 
-            elif img1 == temp3:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (550, 650)) 
+            # elif img1 == temp3:
+            #     new_image = img1.resize((3000, 1650)) 
+            #     img2 = img
+            #     new_image.paste(img2, (400, 500)) 
 
-            elif img1 == temp5:
-                new_image = img1.resize((2450, 1650)) 
-                img2 = img
-                new_image.paste(img2, (500, 650))  
+            # elif img1 == temp5:
+            #     new_image = img1.resize((3000, 1650)) 
+            #     img2 = img
+            #     new_image.paste(img2, (400, 500))  
         else:
             WIDTH = 1500
             HEIGHT = 800
